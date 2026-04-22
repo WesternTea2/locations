@@ -1,0 +1,3 @@
+# Locations
+
+Gyakorlati feladatok megoldása
