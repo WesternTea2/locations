@@ -5,14 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,13 +23,15 @@ class LocationControllerTest {
 
     @Test
     void getLocations() {
-        List<Location> locations = List.of(
-                new Location("Mallorca", 19.232421, -34.24215)
+        List<LocationDto> locations = List.of(
+                new LocationDto(1L, "Mallorca", -52.24514, 241.42151)
         );
-
         when(locationService.getLocations()).thenReturn(locations);
+        List<LocationDto> expected = locationController.getLocations();
 
-        String actual = locationController.getLocations();
-
-        assertThat(actual).isEqualTo("[Location = 'Mallorca']");    }
+        assertThat(expected)
+                .hasSize(1)
+                .extracting(LocationDto::getName)
+                .containsOnly("Mallorca");
     }
+}

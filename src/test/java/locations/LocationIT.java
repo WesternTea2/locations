@@ -16,9 +16,11 @@ class LocationIT {
 
     @Test
     void getLocations() {
-        String locations = locationController.getLocations();
+        List<LocationDto> locations = locationController.getLocations();
 
         assertThat(locations)
-                .isEqualTo("[Location = 'Budapest', Location = 'Catania', Location = 'Taormina']");
+                .hasSize(3)
+                .extracting(LocationDto::getName)
+                .containsExactly("Budapest", "Catania", "Taormina");
     }
 }
