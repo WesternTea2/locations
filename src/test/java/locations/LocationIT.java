@@ -16,8 +16,8 @@ class LocationIT {
     LocationController locationController;
 
     @Test
-    void getLocations(Optional<String> prefix) {
-        List<LocationDto> locations = locationController.getLocations(prefix);
+    void getLocations() {
+        List<LocationDto> locations = locationController.getLocations(Optional.empty());
 
         assertThat(locations)
                 .hasSize(3)
