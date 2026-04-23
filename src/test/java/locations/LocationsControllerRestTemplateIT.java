@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @AutoConfigureRestTestClient
@@ -19,8 +19,14 @@ public class LocationsControllerRestTemplateIT {
     @Autowired
     RestTestClient restTestClient;
 
+    @Autowired
+    LocationService locationService;
+
     @Test
     void testListLocations() {
+
+        locationService.deleteAllLocation();
+
         restTestClient.post()
                 .uri("/api/locations")
                 .body(new CreateLocationCommand("Budapest", 12.321, 23.421))
@@ -36,9 +42,13 @@ public class LocationsControllerRestTemplateIT {
                 .value(locationDto -> assertEquals("Catania", locationDto.getName()));
 
 
-        restTestClient.get().uri("/api/locations").exchange().expectBody(new ParameterizedTypeReference<List<LocationDto>>() {
-        })
-                .value(employees -> assertThat(employees).extracting(LocationDto::getName).containsExactly("Budapest", "Catania"));
+        restTestClient.get()
+                .uri("/api/locations")
+                .exchange()
+                .expectBody(new ParameterizedTypeReference<List<LocationDto>>() {})
+                .value(locations -> assertThat(locations)
+                        .extracting(LocationDto::getName)
+                        .containsExactly("Budapest", "Catania"));
 
     }
 }

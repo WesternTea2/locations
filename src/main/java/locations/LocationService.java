@@ -72,4 +72,8 @@ public class LocationService {
     private static Supplier<LocationNotFoundException> notFoundException(long id) {
         return () -> new LocationNotFoundException("Location with id " + id + " does not exist");
     }
+
+    public void deleteAllLocation() {
+        locations.clear();
+    }
 }
