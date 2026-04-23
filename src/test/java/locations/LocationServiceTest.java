@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -11,10 +12,10 @@ import static org.assertj.core.api.Assertions.tuple;
 class LocationServiceTest {
 
     @Test
-    void getLocations() {
+    void getLocations(Optional<String> prefix) {
         LocationService locationService = new LocationService(new ModelMapper());
 
-        List<LocationDto> locationList = locationService.getLocations();
+        List<LocationDto> locationList = locationService.getLocations(prefix);
 
         assertThat(locationList)
                 .hasSize(3)

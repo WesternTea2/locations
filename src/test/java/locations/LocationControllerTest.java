@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -22,12 +23,12 @@ class LocationControllerTest {
     LocationController locationController;
 
     @Test
-    void getLocations() {
+    void getLocations(Optional<String> prefix) {
         List<LocationDto> locations = List.of(
                 new LocationDto(1L, "Mallorca", -52.24514, 241.42151)
         );
-        when(locationService.getLocations()).thenReturn(locations);
-        List<LocationDto> expected = locationController.getLocations();
+        when(locationService.getLocations(prefix)).thenReturn(locations);
+        List<LocationDto> expected = locationController.getLocations(prefix);
 
         assertThat(expected)
                 .hasSize(1)
