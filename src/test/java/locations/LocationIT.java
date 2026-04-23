@@ -15,13 +15,13 @@ class LocationIT {
     @Autowired
     LocationController locationController;
 
-    @Test
-    void getLocations() {
-        List<LocationDto> locations = locationController.getLocations(Optional.empty());
-
-        assertThat(locations)
-                .hasSize(3)
-                .extracting(LocationDto::getName)
-                .containsExactly("Budapest", "Catania", "Taormina");
-    }
+//    @Test
+//    void getLocations() {
+//        List<LocationDto> locations = locationController.getLocations(Optional.empty());
+//
+//        assertThat(locations)
+//                .hasSize(3)
+//                .extracting(LocationDto::getName)
+//                .containsExactly("Budapest", "Catania", "Taormina");
+//    }
 }

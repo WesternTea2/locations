@@ -1,0 +1,38 @@
+GET http://localhost:8080/api/locations
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/locations/9
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/locations
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Milano",
+  "latitude": 23.2521,
+  "longitude": 13.4245
+}
+
+
+###
+
+PUT http://localhost:8080/api/locations/9
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Milano",
+  "latitude": 23.2521,
+  "longitude": 13.4245
+}
+
+
+###
+
+
+DELETE http://localhost:8080/api/locations/9
