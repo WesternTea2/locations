@@ -17,7 +17,7 @@ class LocationServiceTest {
         locationsService = new LocationService(new LocationMapper() {
             @Override
             public LocationDto toDto(Location location) {
-                return new LocationDto(location.getId(), location.getName(), location.getLat(), location.getLon());
+                return new LocationDto(location.getId(), location.getName(), location.getLatitude(), location.getLongitude());
             }
 
             @Override
