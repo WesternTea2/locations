@@ -1,9 +1,9 @@
 package locations;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,30 +12,48 @@ class LocationServiceTest {
 
     LocationService locationsService;
 
-//    @Test
-//    void testGetLocationsByPrefix() {
-//        List<LocationDto> expected = locationsService.getLocations(Optional.of("B"));
-//
-//        assertThat(expected)
-//                .hasSize(1)
-//                .extracting(LocationDto::getName)
-//                .containsExactly("Budapest");
-//    }
-//
-//    @Test
-//    void testGetLocations() {
-//        List<LocationDto> expected = locationsService.getLocations(Optional.empty());
-//
-//        assertThat(expected)
-//                .hasSize(3)
-//                .extracting(LocationDto::getName)
-//                .containsExactly("Budapest", "Catania", "Mallorca");
-//    }
-//
-//    @Test
-//    void testFindLocationById() {
-//        LocationDto expected = locationsService.findLocationById(2);
-//
-//        assertEquals("Róma", expected.getName());
-//    }
+    @BeforeEach
+    void init() {
+        locationsService = new LocationService(new LocationMapper() {
+            @Override
+            public LocationDto toDto(Location location) {
+                return new LocationDto(location.getId(), location.getName(), location.getLat(), location.getLon());
+            }
+
+            @Override
+            public List<LocationDto> toDto(List<Location> locations) {
+                return locations.stream().map(this::toDto).toList();
+            }
+        });
+    }
+
+    @Test
+    void testGetLocationsByPrefix() {
+        QueryParameters queryParameters = new QueryParameters();
+        queryParameters.setPrefix("B");
+
+        List<LocationDto> expected = locationsService.getLocations(queryParameters);
+
+        assertThat(expected)
+                .hasSize(2)
+                .extracting(LocationDto::getName)
+                .containsExactly("Budapest", "BudaBuda");
+    }
+
+    @Test
+    void testGetLocations() {
+        List<LocationDto> expected = locationsService.getLocations(new QueryParameters());
+
+        assertThat(expected)
+                .hasSize(5)
+                .extracting(LocationDto::getName)
+                .containsExactly("Budapest", "BudaBuda", "Catania", "Taormina", "Sao Paulo");
+    }
+
+    @Test
+    void testFindLocationById() {
+        LocationDto expected = locationsService.findLocationById(3);
+
+        assertEquals("Catania", expected.getName());
+    }
 }
