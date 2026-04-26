@@ -3,11 +3,6 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/locations
-Accept: application/xml
-
-###
-
 GET http://localhost:8080/api/locations/9
 Accept: application/json
 
@@ -23,7 +18,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Milano",
+  "name": "tiszalök",
   "latitude": 23.2521,
   "longitude": 13.4245
 }
